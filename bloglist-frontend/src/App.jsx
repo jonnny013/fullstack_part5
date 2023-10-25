@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import CreateBlog from './components/CreateBlog'
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -13,6 +14,7 @@ const App = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
+  const [styling, setStyling] = useState(null)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser')
@@ -29,7 +31,18 @@ const App = () => {
     )  
   }, [])
 
-  
+  const errormessagefunction = (message, style) => {
+    setErrorMessage(message)
+    if (style === 'green') {
+      setStyling('style1')
+    } else {
+      setStyling('style2')
+    }
+    setTimeout(() => {
+      setStyling(null)
+      setErrorMessage(null)
+    }, 5000)
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -44,11 +57,9 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      errormessagefunction(`Welcome ${user.name}`, 'green')
     } catch (exception) {
-      setErrorMessage('wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      errormessagefunction('wrong username or password', 'red')
     }
   }
   
@@ -56,24 +67,30 @@ const App = () => {
     event.preventDefault()
     setUser(null)
     window.localStorage.removeItem('loggedBloglistUser')
+    errormessagefunction('User logged out', 'green')
   }
 
-  const handleCreateBlog = (event) => {
+  const handleCreateBlog = async (event) => {
     event.preventDefault()
     const blogObject = {
       title: title,
       author: author,
       url: url
     }
-
-    blogService
-      .create(blogObject)
-        .then(returnedBlog => {
-          setBlogs(blogs.concat(returnedBlog))
+    
+    try {const response = await blogService.create(blogObject)
+          setBlogs(blogs.concat(response))
+          errormessagefunction(`New blog ${title} by ${author} added`, 'green')
           setAuthor('')
           setTitle('')
           setUrl('')
-        })
+        } catch (exception) {
+          console.log('exception', exception)
+          console.log('details', exception.response)
+      errormessagefunction(`Post unsuccesful: ${exception.response.data.error}`, 'red')
+    }
+    
+        
   }
 
   const loginForm = () => (
@@ -94,13 +111,17 @@ const App = () => {
 
   if (!user) {
     return (
-      loginForm()
+      <div>
+      {errorMessage && <Notification message={errorMessage} styling={styling} />}
+      {loginForm()}
+      </div>
     )
   }
 
   return (
     <div>
       <h2>Blogs</h2>
+      {errorMessage && <Notification message={errorMessage} styling={styling} />}
       <p>{user.name} is logged in. <button onClick={handleLogout}>Logout</button></p>
       <CreateBlog handleCreateBlog={handleCreateBlog} title={title} setTitle={setTitle} author={author} setAuthor={setAuthor} url={url} setUrl={setUrl}   />
       {blogs.map(blog =>
