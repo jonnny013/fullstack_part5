@@ -11,9 +11,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  
   const [errorMessage, setErrorMessage] = useState(null)
   const [styling, setStyling] = useState(null)
 
@@ -71,23 +69,13 @@ const App = () => {
     errormessagefunction('User logged out', 'green')
   }
 
-  const handleCreateBlog = async (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: title,
-      author: author,
-      url: url
-    }
+  const handleCreateBlog = async (blogObject) => {
     
     try {const response = await blogService.create(blogObject)
           setBlogs(blogs.concat(response))
-          errormessagefunction(`New blog ${title} by ${author} added`, 'green')
-          setAuthor('')
-          setTitle('')
-          setUrl('')
+          errormessagefunction(`New blog ${blogObject.title} by ${blogObject.author} added`, 'green')
+
         } catch (exception) {
-          console.log('exception', exception)
-          console.log('details', exception.response)
       errormessagefunction(`Post unsuccesful: ${exception.response.data.error}`, 'red')
     }
     
@@ -125,7 +113,7 @@ const App = () => {
       {errorMessage && <Notification message={errorMessage} styling={styling} />}
       <p>{user.name} is logged in. <button onClick={handleLogout}>Logout</button></p>
       <Togglable buttonLabel='Create New Blog'>
-        <CreateBlog handleCreateBlog={handleCreateBlog} title={title} setTitle={setTitle} author={author} setAuthor={setAuthor} url={url} setUrl={setUrl}   />
+        <CreateBlog handleCreateBlog={handleCreateBlog} />
       </Togglable>
       
       {blogs.map(blog =>
