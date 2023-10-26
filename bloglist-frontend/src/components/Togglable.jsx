@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import { useState, react } from 'react'
 
 const Togglable = (props) => {
     const [visible, setVisible] =useState(false)

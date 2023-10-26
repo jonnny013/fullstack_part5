@@ -70,16 +70,12 @@ const App = () => {
   }
 
   const handleCreateBlog = async (blogObject) => {
-    
     try {const response = await blogService.create(blogObject)
-          setBlogs(blogs.concat(response))
+          blogService.getAll().then(blogs => setBlogs( blogs ))  
           errormessagefunction(`New blog ${blogObject.title} by ${blogObject.author} added`, 'green')
-
         } catch (exception) {
       errormessagefunction(`Post unsuccesful: ${exception.response.data.error}`, 'red')
-    }
-    
-        
+    }  
   }
 
   const loginForm = () => (
@@ -97,6 +93,12 @@ const App = () => {
     </form>
   )
 
+  const handleLike = async (blog) => {
+    await blogService.addLike(blog)
+    blogService.getAll().then(blogs => setBlogs( blogs ))  
+    errormessagefunction("Blog liked!", 'green')
+  }
+
 
   if (!user) {
     return (
@@ -107,6 +109,8 @@ const App = () => {
     )
   }
 
+  
+
   return (
     <div>
       <h2>Blogs</h2>
@@ -116,8 +120,8 @@ const App = () => {
         <CreateBlog handleCreateBlog={handleCreateBlog} />
       </Togglable>
       
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      {blogs.sort((a,b) => b.likes - a.likes).map(blog =>
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} />
       )}
     </div>
   )
