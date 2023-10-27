@@ -6,6 +6,7 @@ import Blog from './Blog'
 
 describe('<Blog />', () => {
   let container
+  const mockHandler = jest.fn()
 
   beforeEach(() => {
     const blog = {
@@ -21,8 +22,10 @@ describe('<Blog />', () => {
       name: 'jon'
     }
 
+
+
     container = render(
-      <Blog blog={blog} user={user} />
+      <Blog blog={blog} user={user} handleLike={mockHandler} />
     ).container
   })
   test('title and author are displayed at start', async () => {
@@ -39,5 +42,12 @@ describe('<Blog />', () => {
 
     const div = container.querySelector('.blogFullInfoDisplay')
     expect(div).not.toHaveStyle('display: none')
+  })
+  test('Clicking like twice gets called twice', async () => {
+    const user = userEvent.setup()
+    const button = screen.getByText('Like')
+    await user.click(button)
+    await user.click(button)
+    expect(mockHandler.mock.calls).toHaveLength(2)
   })
 })
