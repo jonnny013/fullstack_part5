@@ -1,6 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
 describe('<Blog />', () => {
@@ -19,6 +20,7 @@ describe('<Blog />', () => {
     const user = {
       name: 'jon'
     }
+
     container = render(
       <Blog blog={blog} user={user} />
     ).container
@@ -29,5 +31,13 @@ describe('<Blog />', () => {
   test('likes and url are hidden', async () => {
     const div = container.querySelector('.blogFullInfoDisplay')
     expect(div).toHaveStyle('display: none')
+  })
+  test('Click View shows likes and url', async () => {
+    const user = userEvent.setup()
+    const button = screen.getByText('View')
+    await user.click(button)
+
+    const div = container.querySelector('.blogFullInfoDisplay')
+    expect(div).not.toHaveStyle('display: none')
   })
 })
