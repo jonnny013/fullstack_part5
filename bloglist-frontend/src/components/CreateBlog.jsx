@@ -25,15 +25,15 @@ const CreateBlog = ({ handleCreateBlog }) => {
       <form onSubmit={makeBlog}>
         <div>
                 Title:
-          <input type='text' value={title} name='Title' onChange={({ target }) => setTitle(target.value)} />
+          <input type='text' value={title} name='Title' placeholder='Choose a title' onChange={({ target }) => setTitle(target.value)} />
         </div>
         <div>
                 Author:
-          <input type='text' value={author} name='Author' onChange={({ target }) => setAuthor(target.value)} />
+          <input type='text' value={author} name='Author' placeholder="Author's name" onChange={({ target }) => setAuthor(target.value)} />
         </div>
         <div>
                 Url:
-          <input type='text' value={url} name='Url' onChange={({ target }) => setUrl(target.value)} />
+          <input type='text' value={url} name='Url'  placeholder='Add a Url to see the whole blog' onChange={({ target }) => setUrl(target.value)} />
         </div>
         <button type='submit'>Create</button>
       </form>
