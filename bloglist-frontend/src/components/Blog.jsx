@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({ blog, handleLike }) => {
+const Blog = ({ blog, handleLike, handleDelete, user }) => {
   const blogStyle = {
     paddingTop: 5,
     paddingLeft: 2,
@@ -12,10 +12,15 @@ const Blog = ({ blog, handleLike }) => {
   const paragraphStyle = {
     margin: 2,
   }
-
     const [visible, setVisible] =useState(false)
     const showWhenVisible = {display: visible ? '' : 'none'}
     
+    const getClickableLink = link => {
+    return link.startsWith("http://") || link.startsWith("https://") ?
+      link
+      : `http://${link}`;
+  }
+
     const toggleVisibility = () => {
         setVisible(!visible)
     }
@@ -26,9 +31,13 @@ const Blog = ({ blog, handleLike }) => {
     <p style={paragraphStyle}>{blog.title} - {blog.author} <button onClick={toggleVisibility}>{viewHideButton}</button></p>
     </div>
     <div style={showWhenVisible}>
-      <p style={paragraphStyle}>{blog.url}</p>
+      <p style={paragraphStyle}>Link: <a href={getClickableLink(blog.url)} target="_blank" >{blog.url}</a></p>
       <p style={paragraphStyle}>Likes: {blog.likes} <button onClick={() => handleLike(blog)}>Like</button></p>
-      <p style={paragraphStyle}>{blog.user.name}</p>
+      <p style={paragraphStyle}>User: {blog.user.name}</p>
+      {blog.user.username === user.username &&
+        <p style={paragraphStyle}><button onClick={() => handleDelete(blog)}>Remove</button></p>
+      }
+      
     </div>
   </div>  
 )}
