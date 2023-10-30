@@ -29,14 +29,14 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
   return(
     <div style={blogStyle} className='blogTitleDisplay'>
       <div>
-        <p style={paragraphStyle}>{blog.title} - {blog.author} <button onClick={toggleVisibility}>{viewHideButton}</button></p>
+        <p style={paragraphStyle}>{blog.title} - {blog.author} <button id='view-hide-button' onClick={toggleVisibility}>{viewHideButton}</button></p>
       </div>
       <div style={showWhenVisible} className='blogFullInfoDisplay'>
         <p style={paragraphStyle}>Link: <a href={getClickableLink(blog.url)} target="_blank" rel="noreferrer" >{blog.url}</a></p>
-        <p style={paragraphStyle}>Likes: {blog.likes} <button onClick={() => handleLike(blog)}>Like</button></p>
+        <p style={paragraphStyle}>Likes: {blog.likes} <button id='like-button' onClick={() => handleLike(blog)}>Like</button></p>
         <p style={paragraphStyle}>User: {blog.user.name}</p>
         {blog.user.username === user.username &&
-        <p style={paragraphStyle}><button onClick={() => handleDelete(blog)}>Remove</button></p>
+        <p style={paragraphStyle}><button id='remove-button' onClick={() => handleDelete(blog)}>Remove</button></p>
         }
 
       </div>

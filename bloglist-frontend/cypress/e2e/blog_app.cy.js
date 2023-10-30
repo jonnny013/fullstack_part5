@@ -45,7 +45,7 @@ describe('Blog app', function() {
       cy.login({ username: 'Jon', password: '123' })
     })
 
-    it.only('A blog can be created', function() {
+    it('A blog can be created', function() {
       cy.contains('Create New Blog').click()
       cy.get('#title-input').type('This is a blog title')
       cy.get('#author-input').type('Cypress tester')
@@ -56,21 +56,40 @@ describe('Blog app', function() {
     })
     describe('With blogs premade', function() {
       beforeEach(function() {
-      // make blog
+        cy.createBlog({
+          title: 'Testing here',
+          author: 'some tester',
+          url: 'some url',
+          likes: 10
+        })
+        cy.createBlog({
+          title: 'A second test',
+          author: 'some other tester',
+          url: 'some other url',
+          likes: 5
+        })
       })
-
       it('User can like a blog', function() {
-      // ...
+        cy.get('#view-hide-button').click()
+        cy.get('#like-button').click()
+        cy.contains('Likes: 11')
       })
       it('User can delete own blog', function() {
-        // ...
+        cy.get('#view-hide-button').click()
+        cy.get('#remove-button').click()
+
+        cy.get('.notificationMessage')
+          .should('contain', 'Blog deleted')
+          .and('have.css', 'color', 'rgb(0, 128, 0)')
+          .and('have.css', 'border-style', 'solid')
       })
       it('')
     })
-    describe('Different user is logged in', function() {
-      beforeEach(function() {
-      // log in user here
-      })
+
+  })
+  describe('Different user is logged in', function() {
+    beforeEach(function() {
+
 
       it('User cant delete other users blog', function() {
       // ...
