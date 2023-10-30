@@ -5,6 +5,8 @@ import loginService from './services/login'
 import CreateBlog from './components/CreateBlog'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
+import './app.css'
+import Header from './components/Header'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -81,15 +83,16 @@ const App = () => {
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <h1>Log In</h1>
-      <div>
-        Username:
+      <div >
+        <p className='login-paragraph'>Username</p>
         <input type='text' id='username' value={username} name='Username' onChange={({ target }) => setUsername(target.value)} />
       </div>
       <div>
-        Password:
-        <input type='text' id='password' value={password} name='Password' onChange={({ target }) => setPassword(target.value)} />
+        <p className='login-paragraph'>Password</p>
+        <input type='password' id='password' value={password} name='Password' onChange={({ target }) => setPassword(target.value)} />
       </div>
       <button type="submit" id='login-button'>Login</button>
+      <p>temp login username: test password: test</p>
     </form>
   )
 
@@ -115,7 +118,7 @@ const App = () => {
 
   if (!user) {
     return (
-      <div>
+      <div className='login-div'>
         {errorMessage && <Notification message={errorMessage} styling={styling} />}
         {loginForm()}
       </div>
@@ -126,9 +129,8 @@ const App = () => {
 
   return (
     <div>
-      <h2>Blogs</h2>
+      <Header handleLogout={handleLogout} user={user} />
       {errorMessage && <Notification message={errorMessage} styling={styling} />}
-      <p>{user.name} is logged in. <button id='logout-button' onClick={handleLogout}>Logout</button></p>
       <Togglable buttonLabel='Create New Blog'>
         <CreateBlog handleCreateBlog={handleCreateBlog} />
       </Togglable>

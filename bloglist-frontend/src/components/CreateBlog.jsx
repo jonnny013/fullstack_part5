@@ -18,26 +18,34 @@ const CreateBlog = ({ handleCreateBlog }) => {
     setTitle('')
     setUrl('')
   }
+  const stylesDiv = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgb(2, 175, 175)',
+    width: 400,
+    borderRadius: 5,
+    marginTop: 10
+  }
 
   return (
-    <>
-      <h2>Create New Blog</h2>
-      <form onSubmit={makeBlog}>
-        <div>
-                Title:
-          <input type='text' id='title-input' value={title} name='Title' placeholder='Choose a title' onChange={({ target }) => setTitle(target.value)} />
-        </div>
-        <div>
-                Author:
-          <input type='text' id='author-input' value={author} name='Author' placeholder="Author's name" onChange={({ target }) => setAuthor(target.value)} />
-        </div>
-        <div>
-                Url:
-          <input type='text'  id='url-input' value={url} name='Url'  placeholder='Add a Url to see the whole blog' onChange={({ target }) => setUrl(target.value)} />
-        </div>
+    <div style={stylesDiv}>
+      <h2 className='createBlogTitle'>Create New Blog</h2>
+      <form onSubmit={makeBlog} style={stylesDiv}>
+
+        <p className='newBlogParagraph'>Title</p>
+        <input type='text' id='title-input' value={title} name='Title' placeholder='Choose a title' onChange={({ target }) => setTitle(target.value)} />
+
+        <p className='newBlogParagraph'>Author</p>
+        <input type='text' id='author-input' value={author} name='Author' placeholder="Author's name" onChange={({ target }) => setAuthor(target.value)} />
+
+        <p className='newBlogParagraph'>Website</p>
+        <input type='text'  id='url-input' value={url} name='Url'  placeholder='Add a Url to see the whole blog' onChange={({ target }) => setUrl(target.value)} />
+        <br />
         <button type='submit' id='create-button'>Create</button>
       </form>
-    </>
+    </div>
   )
 }
 

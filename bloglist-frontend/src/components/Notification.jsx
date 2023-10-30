@@ -9,7 +9,8 @@ const Notification = ({ message, styling }) => {
     fontSize: 20,
     borderRadius: 5,
     padding: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    textAlign: 'center'
   }
 
   const style2 = {
@@ -20,6 +21,7 @@ const Notification = ({ message, styling }) => {
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+    textAlign: 'center'
   }
 
   const selection = styling === 'style1' ? style1 : style2

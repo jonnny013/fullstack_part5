@@ -9,9 +9,11 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
     borderWidth: 1,
     marginBottom: 5,
     borderRadius: 5,
+    backgroundColor: 'rgb(155, 195, 217)'
   }
   const paragraphStyle = {
     margin: 2,
+    fontSize: '2.3rem',
   }
   const [visible, setVisible] =useState(false)
   const showWhenVisible = { display: visible ? '' : 'none' }
@@ -21,7 +23,6 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
       link
       : `http://${link}`
   }
-  console.log(blog)
   const toggleVisibility = () => {
     setVisible(!visible)
   }

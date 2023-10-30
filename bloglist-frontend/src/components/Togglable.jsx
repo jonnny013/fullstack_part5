@@ -7,17 +7,31 @@ const Togglable = (props) => {
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
+  const stylesDiv = {
+    marginTop: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 400,
+    margin: 'auto'
+  }
+  const button = {
+    margin: 10
+  }
+
   const toggleVisibility = () => {
     setVisible(!visible)
   }
   return (
-    <div>
+    <div style={stylesDiv}>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+        <button onClick={toggleVisibility} style={button}>{props.buttonLabel}</button>
       </div>
-      <div style={showWhenVisible}>
-        {props.children}
-        <button onClick={toggleVisibility}>Cancel</button>
+      <div style={showWhenVisible} className='centerButton'>
+        <div>
+          {props.children}
+        </div>
+        <button className='cancelButton' onClick={toggleVisibility}>Cancel</button>
       </div>
     </div>
   )
