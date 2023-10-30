@@ -58,7 +58,7 @@ const App = () => {
       setPassword('')
       errormessagefunction(`Welcome ${user.name}`, 'green')
     } catch (exception) {
-      errormessagefunction('wrong username or password', 'red')
+      errormessagefunction('Wrong username or password', 'red')
     }
   }
 
@@ -83,13 +83,13 @@ const App = () => {
       <h1>Log In</h1>
       <div>
         Username:
-        <input type='text' value={username} name='Username' onChange={({ target }) => setUsername(target.value)} />
+        <input type='text' id='username' value={username} name='Username' onChange={({ target }) => setUsername(target.value)} />
       </div>
       <div>
         Password:
-        <input type='text' value={password} name='Password' onChange={({ target }) => setPassword(target.value)} />
+        <input type='text' id='password' value={password} name='Password' onChange={({ target }) => setPassword(target.value)} />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit" id='login-button'>Login</button>
     </form>
   )
 
