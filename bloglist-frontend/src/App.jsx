@@ -128,7 +128,7 @@ const App = () => {
     <div>
       <h2>Blogs</h2>
       {errorMessage && <Notification message={errorMessage} styling={styling} />}
-      <p>{user.name} is logged in. <button onClick={handleLogout}>Logout</button></p>
+      <p>{user.name} is logged in. <button id='logout-button' onClick={handleLogout}>Logout</button></p>
       <Togglable buttonLabel='Create New Blog'>
         <CreateBlog handleCreateBlog={handleCreateBlog} />
       </Togglable>

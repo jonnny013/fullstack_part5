@@ -83,19 +83,45 @@ describe('Blog app', function() {
           .and('have.css', 'color', 'rgb(0, 128, 0)')
           .and('have.css', 'border-style', 'solid')
       })
-      it('')
+      it('user can log out', function() {
+        cy.get('#logout-button').click()
+      })
     })
 
   })
   describe('Different user is logged in', function() {
     beforeEach(function() {
-
-
-      it('User cant delete other users blog', function() {
-      // ...
+      cy.login({ username: 'Jon', password: '123' })
+      cy.createBlog({
+        title: 'Five likes',
+        author: 'five',
+        url: 'some url',
+        likes: 5
       })
-      it('Check if most liked blogs order is corect')
+      cy.createBlog({
+        title: 'Twenty likes',
+        author: 'twenty',
+        url: 'some other url',
+        likes: 20
+      })
+      cy.createBlog({
+        title: 'Ten likes',
+        author: 'ten',
+        url: 'some other url',
+        likes: 10
+      })
+      cy.get('#logout-button').click()
+      cy.login({ username: 'test', password: 'test' })
+    })
+    it('User cant delete other users blog', function() {
+      cy.get('#view-hide-button').click()
+      cy.contains('Remove').should('not.exist')
+    })
+    it.only('Check if most liked blogs order is correct', function() {
+      cy.get('.blogFullInfoDisplay>p').eq(0)
+      cy.contains('Twenty likes - twenty')
+      cy.get('.blogFullInfoDisplay>p').eq(1)
+      cy.contains('Ten likes - ten')
     })
   })
-
 })
