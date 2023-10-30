@@ -24,7 +24,7 @@ const Notification = ({ message, styling }) => {
 
   const selection = styling === 'style1' ? style1 : style2
   return (
-    <div style={selection} >{message}</div>
+    <div style={selection} className='notificationMessage'>{message}</div>
   )
 }
 

@@ -21,7 +21,7 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
       link
       : `http://${link}`
   }
-
+  console.log(blog)
   const toggleVisibility = () => {
     setVisible(!visible)
   }
