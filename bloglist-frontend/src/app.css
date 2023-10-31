@@ -5,7 +5,7 @@ html {
 }
 
 body {
-    background-color: rgb(27, 27, 193);
+    background-color: rgb(0, 0, 55);
 }
 
 h1 {
@@ -40,7 +40,7 @@ button {
     border: 1px solid;
     width: auto;
     height: 30px;
-    background-color: antiquewhite;
+    background-color: rgb(244, 184, 4);
 }
 
 #password, #username {

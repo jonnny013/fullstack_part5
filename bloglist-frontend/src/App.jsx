@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -13,7 +13,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
+  const createBlogRef = useRef()
   const [errorMessage, setErrorMessage] = useState(null)
   const [styling, setStyling] = useState(null)
 
@@ -74,6 +74,7 @@ const App = () => {
   const handleCreateBlog = async (blogObject) => {
     try {const response = await blogService.create(blogObject)
       blogService.getAll().then(blogs => setBlogs( blogs ))
+      createBlogRef.current.toggleVisibility()
       errormessagefunction(`New blog ${blogObject.title} by ${blogObject.author} added`, 'green')
     } catch (exception) {
       errormessagefunction(`Post unsuccesful: ${exception.response.data.error}`, 'red')
@@ -131,7 +132,7 @@ const App = () => {
     <div>
       <Header handleLogout={handleLogout} user={user} />
       {errorMessage && <Notification message={errorMessage} styling={styling} />}
-      <Togglable buttonLabel='Create New Blog'>
+      <Togglable buttonLabel='Create New Blog' ref={createBlogRef}>
         <CreateBlog handleCreateBlog={handleCreateBlog} />
       </Togglable>
 

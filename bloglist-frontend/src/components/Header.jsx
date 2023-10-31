@@ -3,7 +3,7 @@ import logoPic from '../mainLogo.png'
 
 const Header = (props) => {
   const styles = {
-    backgroundColor: 'gray',
+    backgroundColor: 'orange',
     display: 'flex',
     padding: 10,
     alignItems: 'center',
