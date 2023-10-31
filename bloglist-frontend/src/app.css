@@ -80,3 +80,22 @@ button {
     display: flex;
     flex-direction: column;
 }
+
+.logo {
+    width: 100px;
+    height: auto;
+    padding-left: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .headerDiv {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .logo {
+    padding-left: 0;
+  }
+  .userInfo {
+    padding-right: 0;
+  }
+}
